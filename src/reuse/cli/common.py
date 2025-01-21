@@ -50,6 +50,7 @@ class ClickObj:
                 root,
                 include_submodules=self.include_submodules,
                 include_meson_subprojects=self.include_meson_subprojects,
+                ignore_file=self.ignore_file,
             )
         # FileNotFoundError and NotADirectoryError don't need to be caught
         # because argparse already made sure of these things.
