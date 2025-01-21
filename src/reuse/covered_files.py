@@ -15,6 +15,8 @@ import re
 from pathlib import Path
 from typing import Collection, Generator, Optional, cast
 
+from py_gitignore_2 import GitignoreBuilder, GitignoreMatcher
+
 from .types import StrPath
 from .vcs import VCSStrategy
 
@@ -64,6 +66,7 @@ def is_path_ignored(
     include_meson_subprojects: bool = False,
     include_reuse_tomls: bool = False,
     vcs_strategy: Optional[VCSStrategy] = None,
+    ignore_matcher: Optional[GitignoreMatcher] = None,
 ) -> bool:
     """Is *path* ignored by some mechanism?"""
     # pylint: disable=too-many-return-statements,too-many-branches
@@ -116,6 +119,9 @@ def is_path_ignored(
     if vcs_strategy and vcs_strategy.is_ignored(path):
         return True
 
+    if ignore_matcher and ignore_matcher.match(str(path)):
+        return True
+
     return False
 
 
@@ -126,6 +132,7 @@ def iter_files(
     include_meson_subprojects: bool = False,
     include_reuse_tomls: bool = False,
     vcs_strategy: Optional[VCSStrategy] = None,
+    ignore_file: Optional[Path] = None,
 ) -> Generator[Path, None, None]:
     """Yield all Covered Files in *directory* and its subdirectories according
     to the REUSE Specification.
@@ -136,6 +143,11 @@ def iter_files(
             set[Path], {Path(file_).resolve() for file_ in subset_files}
         )
 
+    ignore_matcher: Optional[GitignoreMatcher] = None
+    if ignore_file is not None:
+        builder = GitignoreBuilder(directory)
+        builder.add(ignore_file)
+        ignore_matcher = builder.build()
     for root_str, dirs, files in os.walk(directory):
         root = Path(root_str)
         _LOGGER.debug("currently walking in '%s'", root)
@@ -150,6 +162,7 @@ def iter_files(
                 include_meson_subprojects=include_meson_subprojects,
                 include_reuse_tomls=include_reuse_tomls,
                 vcs_strategy=vcs_strategy,
+                ignore_matcher=ignore_matcher,
             ):
                 _LOGGER.debug("ignoring '%s'", the_dir)
                 dirs.remove(dir_)
@@ -164,6 +177,7 @@ def iter_files(
                 include_meson_subprojects=include_meson_subprojects,
                 include_reuse_tomls=include_reuse_tomls,
                 vcs_strategy=vcs_strategy,
+                ignore_matcher=ignore_matcher,
             ):
                 _LOGGER.debug("ignoring '%s'", the_file)
                 continue

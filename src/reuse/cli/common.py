@@ -27,6 +27,7 @@ class ClickObj:
     include_submodules: bool = False
     include_meson_subprojects: bool = False
     no_multiprocessing: bool = True
+    ignore_file: Optional[Path] = None
 
     _project: Optional[Project] = field(
         default=None, init=False, repr=False, compare=False

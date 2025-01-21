@@ -65,6 +65,7 @@ class Project:
     include_meson_subprojects: bool = False
     vcs_strategy: VCSStrategy = attrs.field()
     global_licensing: Optional[GlobalLicensing] = None
+    ignore_file: Optional[Path] = None
 
     # TODO: I want to get rid of these, or somehow refactor this mess.
     license_map: dict[str, dict] = attrs.field()
@@ -90,6 +91,7 @@ class Project:
         root: StrPath,
         include_submodules: bool = False,
         include_meson_subprojects: bool = False,
+        ignore_file: Optional[Path] = None,
     ) -> "Project":
         """A factory method that reads various files in the *root* directory to
         correctly build the :class:`Project` object.
@@ -98,6 +100,7 @@ class Project:
             root: The root of the project.
             include_submodules: Whether to also lint VCS submodules.
             include_meson_subprojects: Whether to also lint Meson subprojects.
+            ignore_file: A file in .gitignore format of paths to ignore.
 
         Raises:
             FileNotFoundError: if root does not exist.
@@ -143,6 +146,7 @@ class Project:
             global_licensing=global_licensing,
             include_submodules=include_submodules,
             include_meson_subprojects=include_meson_subprojects,
+            ignore_file=ignore_file,
         )
 
         # TODO: Because the `_find_licenses()` method is so broad and depends on
@@ -180,6 +184,7 @@ class Project:
             include_submodules=self.include_submodules,
             include_meson_subprojects=self.include_meson_subprojects,
             vcs_strategy=self.vcs_strategy,
+            ignore_file=self.ignore_file,
         )
 
     def subset_files(
@@ -202,6 +207,7 @@ class Project:
             include_submodules=self.include_submodules,
             include_meson_subprojects=self.include_meson_subprojects,
             vcs_strategy=self.vcs_strategy,
+            ignore_file=self.ignore_file,
         )
 
     def reuse_info_of(self, path: StrPath) -> list[ReuseInfo]:
