@@ -13,9 +13,7 @@ import logging
 import os
 import re
 from pathlib import Path
-from typing import Collection, Generator, Optional, cast
-
-from py_gitignore_2 import GitignoreBuilder, GitignoreMatcher
+from typing import Collection, Generator, List, Optional, cast
 
 from .types import StrPath
 from .vcs import VCSStrategy
@@ -66,7 +64,7 @@ def is_path_ignored(
     include_meson_subprojects: bool = False,
     include_reuse_tomls: bool = False,
     vcs_strategy: Optional[VCSStrategy] = None,
-    ignore_matcher: Optional[GitignoreMatcher] = None,
+    ignore_patterns: Optional[List[str]] = None,
 ) -> bool:
     """Is *path* ignored by some mechanism?"""
     # pylint: disable=too-many-return-statements,too-many-branches
@@ -119,10 +117,22 @@ def is_path_ignored(
     if vcs_strategy and vcs_strategy.is_ignored(path):
         return True
 
-    if ignore_matcher and ignore_matcher.match(str(path)):
-        return True
+    if ignore_patterns:
+        for ignore_pattern in ignore_patterns:
+            if path.absolute().match(ignore_pattern):
+                return True
 
     return False
+
+
+def _read_gitignore_file(path: Path) -> List[str]:
+    patterns: List[str] = []
+    with open(path, "r", encoding="UTF-8") as file:
+        for fileline in file:
+            line: str = fileline.strip()
+            if line and not line.startswith("#"):
+                patterns.append(line)
+    return patterns
 
 
 def iter_files(
@@ -143,11 +153,9 @@ def iter_files(
             set[Path], {Path(file_).resolve() for file_ in subset_files}
         )
 
-    ignore_matcher: Optional[GitignoreMatcher] = None
+    ignore_patterns: Optional[List[str]] = None
     if ignore_file is not None:
-        builder = GitignoreBuilder(directory)
-        builder.add(ignore_file)
-        ignore_matcher = builder.build()
+        ignore_patterns = _read_gitignore_file(ignore_file)
     for root_str, dirs, files in os.walk(directory):
         root = Path(root_str)
         _LOGGER.debug("currently walking in '%s'", root)
@@ -162,7 +170,7 @@ def iter_files(
                 include_meson_subprojects=include_meson_subprojects,
                 include_reuse_tomls=include_reuse_tomls,
                 vcs_strategy=vcs_strategy,
-                ignore_matcher=ignore_matcher,
+                ignore_patterns=ignore_patterns,
             ):
                 _LOGGER.debug("ignoring '%s'", the_dir)
                 dirs.remove(dir_)
@@ -177,7 +185,7 @@ def iter_files(
                 include_meson_subprojects=include_meson_subprojects,
                 include_reuse_tomls=include_reuse_tomls,
                 vcs_strategy=vcs_strategy,
-                ignore_matcher=ignore_matcher,
+                ignore_patterns=ignore_patterns,
             ):
                 _LOGGER.debug("ignoring '%s'", the_file)
                 continue
