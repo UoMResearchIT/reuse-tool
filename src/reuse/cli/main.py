@@ -118,6 +118,16 @@ _HELP = (
     default=None,
     help=_("Define root of project."),
 )
+@click.option(
+    "--ignore-file",
+    type=click.Path(
+        exists=True,
+        file_okay=True,
+        path_type=Path,
+    ),
+    default=None,
+    help=_("File in gitignore format of paths to ignore."),
+)
 @click.version_option(
     package_name="reuse",
     message=wrap_text(_VERSION_TEXT, preserve_paragraphs=True),
@@ -131,6 +141,7 @@ def main(
     include_meson_subprojects: bool,
     no_multiprocessing: bool,
     root: Optional[Path],
+    ignore_file: Optional[Path],
 ) -> None:
     # pylint: disable=missing-function-docstring,too-many-arguments
     setup_logging(level=logging.DEBUG if debug else logging.WARNING)
@@ -148,4 +159,5 @@ def main(
         include_submodules=include_submodules,
         include_meson_subprojects=include_meson_subprojects,
         no_multiprocessing=no_multiprocessing,
+        ignore_file=ignore_file,
     )
