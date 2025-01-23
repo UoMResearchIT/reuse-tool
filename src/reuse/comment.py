@@ -961,7 +961,7 @@ def read_extra_formats(path: Path) -> None:
             raise ValueError(
                 f"Extra format values must be one of: {NAME_STYLE_MAP.keys()}")
         if key.startswith("*."):
-            EXTENSION_COMMENT_STYLE_MAP_LOWERCASE[key.lower()] = \
+            EXTENSION_COMMENT_STYLE_MAP_LOWERCASE[key[1:].lower()] = \
                 NAME_STYLE_MAP[value]
         else:
             FILENAME_COMMENT_STYLE_MAP_LOWERCASE[key.lower()] = \
