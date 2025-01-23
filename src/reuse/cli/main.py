@@ -120,7 +120,7 @@ _HELP = (
     help=_("Define root of project."),
 )
 @click.option(
-    "--extra_formats",
+    "--extra-formats",
     type=click.Path(
         exists=True,
         file_okay=True,
