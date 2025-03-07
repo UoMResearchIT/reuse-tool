@@ -20,6 +20,7 @@
 # SPDX-FileCopyrightText: 2024 Anthony Loiseau <anthony.loiseau@allcircuits.com>
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
+import json
 
 """Module for parsing and creating comments. Just enough to deal with comment
 headers, in any case.
@@ -946,3 +947,22 @@ def is_uncommentable(path: Path) -> bool:
 def has_style(path: Path) -> bool:
     """*path*'s extension has a CommentStyle."""
     return get_comment_style(path) is not None
+
+
+def read_extra_formats(path: Path) -> None:
+    """Read extra formats from a file."""
+    extra_formats = json.decoder.JSONDecoder().decode(path.read_text())
+    if not isinstance(extra_formats, dict):
+        raise ValueError("Extra formats must be a JSON dictionary")
+    for key, value in extra_formats.items():
+        if not isinstance(key, str):
+            raise ValueError("Extra format keys must be strings")
+        if not isinstance(value, str) or value not in NAME_STYLE_MAP:
+            raise ValueError(
+                f"Extra format values must be one of: {NAME_STYLE_MAP.keys()}")
+        if key.startswith("*."):
+            EXTENSION_COMMENT_STYLE_MAP_LOWERCASE[key[1:].lower()] = \
+                NAME_STYLE_MAP[value]
+        else:
+            FILENAME_COMMENT_STYLE_MAP_LOWERCASE[key.lower()] = \
+                NAME_STYLE_MAP[value]

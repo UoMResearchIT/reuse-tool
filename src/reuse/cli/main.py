@@ -6,6 +6,7 @@
 # SPDX-FileCopyrightText: 2024 Emil Velikov <emil.l.velikov@gmail.com>
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
+from reuse.comment import read_extra_formats
 
 """Entry function for reuse."""
 
@@ -119,6 +120,16 @@ _HELP = (
     help=_("Define root of project."),
 )
 @click.option(
+    "--extra-formats",
+    type=click.Path(
+        exists=True,
+        file_okay=True,
+        dir_okay=False,
+        path_type=Path),
+    default=None,
+    help=_("Define extra file formats in a JSON dict."),
+    )
+@click.option(
     "--ignore-file",
     type=click.Path(
         exists=True,
@@ -140,6 +151,7 @@ def main(
     include_submodules: bool,
     include_meson_subprojects: bool,
     no_multiprocessing: bool,
+    extra_formats: Optional[Path],
     root: Optional[Path],
     ignore_file: Optional[Path],
 ) -> None:
@@ -161,3 +173,6 @@ def main(
         no_multiprocessing=no_multiprocessing,
         ignore_file=ignore_file,
     )
+
+    if extra_formats is not None:
+        read_extra_formats(extra_formats)
