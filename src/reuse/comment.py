@@ -759,6 +759,7 @@ EXTENSION_COMMENT_STYLE_MAP = {
     ".qrc": HtmlCommentStyle,
     ".qss": CCommentStyle,
     ".R": PythonCommentStyle,
+    ".razor": HtmlCommentStyle,
     ".rake": PythonCommentStyle,
     ".rb": PythonCommentStyle,
     ".rbw": PythonCommentStyle,
