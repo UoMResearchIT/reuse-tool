@@ -366,6 +366,9 @@ class DjangoCommentStyle(CommentStyle):
 
     MULTI_LINE = MultiLineSegments("{% comment %}", "", "{% endcomment %}")
     INDENT_BEFORE_MIDDLE = "    "
+    SHEBANGS = [
+        "{% extends", # extends must be first tag in Django templates
+    ]
 
 
 class EmptyCommentStyle(CommentStyle):
