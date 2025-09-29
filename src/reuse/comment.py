@@ -359,6 +359,15 @@ class CppSingleCommentStyle(CommentStyle):
     INDENT_AFTER_SINGLE = " "
 
 
+class DjangoCommentStyle(CommentStyle):
+    """Django template comment style."""
+
+    SHORTHAND = "django"
+
+    MULTI_LINE = MultiLineSegments("{% comment %}", "", "{% endcomment %}")
+    INDENT_BEFORE_MIDDLE = "    "
+
+
 class EmptyCommentStyle(CommentStyle):
     """Hacky comment style for files that have no comments."""
 
@@ -627,6 +636,7 @@ EXTENSION_COMMENT_STYLE_MAP = {
     ".d": CppCommentStyle,
     ".dart": CppCommentStyle,
     ".di": CppCommentStyle,
+    ".dj": DjangoCommentStyle,
     ".doc": UncommentableCommentStyle,
     ".docx": UncommentableCommentStyle,
     ".dotx": UncommentableCommentStyle,
