@@ -636,7 +636,6 @@ EXTENSION_COMMENT_STYLE_MAP = {
     ".d": CppCommentStyle,
     ".dart": CppCommentStyle,
     ".di": CppCommentStyle,
-    ".dj": DjangoCommentStyle,
     ".doc": UncommentableCommentStyle,
     ".docx": UncommentableCommentStyle,
     ".dotx": UncommentableCommentStyle,
