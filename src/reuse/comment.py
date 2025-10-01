@@ -322,6 +322,13 @@ class BibTexCommentStyle(CommentStyle):
     SHEBANGS = ["% !BIB", "%!BIB"]
 
 
+class BlazorCommentStyle(CommentStyle):
+    """Blazor comment style."""
+
+    SHORTHAND = "blazor"
+
+    MULTI_LINE = MultiLineSegments("@*", "", "*@")
+
 class CCommentStyle(CommentStyle):
     """C comment style."""
 
@@ -771,6 +778,7 @@ EXTENSION_COMMENT_STYLE_MAP = {
     ".qss": CCommentStyle,
     ".R": PythonCommentStyle,
     ".rake": PythonCommentStyle,
+    ".razor": BlazorCommentStyle,
     ".rb": PythonCommentStyle,
     ".rbw": PythonCommentStyle,
     ".rbx": PythonCommentStyle,
