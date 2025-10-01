@@ -359,6 +359,17 @@ class CppSingleCommentStyle(CommentStyle):
     INDENT_AFTER_SINGLE = " "
 
 
+class DjangoCommentStyle(CommentStyle):
+    """Django template comment style."""
+
+    SHORTHAND = "django"
+
+    MULTI_LINE = MultiLineSegments("{% comment %}", "", "{% endcomment %}")
+    SHEBANGS = [
+        "{% extends", # extends must be first tag in Django templates
+    ]
+
+
 class EmptyCommentStyle(CommentStyle):
     """Hacky comment style for files that have no comments."""
 
