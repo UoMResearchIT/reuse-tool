@@ -103,8 +103,14 @@ def add_header_to_file(
             path.touch()
             comment_style = EmptyCommentStyle
 
+    # Take care when handling this file to strip a byte-order mark (BOM) before
+    # handing off to the rest of the code. If there is one, it will be put back
+    # in when the file is written out.
     with open(path, "r", encoding="utf-8", newline="") as fp:
         text = fp.read()
+        has_bom = text.startswith("\ufeff")
+        if has_bom:
+            text = text[1:]
 
     # Ideally, this check is done elsewhere. But that would necessitate reading
     # the file contents before this function is called.
@@ -161,6 +167,8 @@ def add_header_to_file(
         result = 1
     else:
         with open(path, "w", encoding="utf-8", newline=line_ending) as fp:
+            if has_bom:
+                fp.write("\ufeff")
             fp.write(output)
         # TODO: This may need to be rephrased more elegantly.
         out.write(_("Successfully changed header of {path}").format(path=path))
