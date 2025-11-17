@@ -53,7 +53,7 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "^3.9"
-Jinja2 = ">=3.0.0"
+Jinja2 = ">=3.1.6"
 binaryornot = ">=0.4.4"
 "boolean.py" = ">=3.8"
 license-expression = ">=1.0"
