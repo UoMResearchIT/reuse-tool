@@ -17,6 +17,9 @@ on:
   # On PRs only do tests
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   # ===========================================================================
   # Test Docker images
