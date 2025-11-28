@@ -12,10 +12,32 @@ on:
     paths:
       - "src/reuse/**.py"
 
+permissions:
+  # Writes, but needs a special key
+  contents: read
+
 jobs:
+  validate-secrets:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check for setup of secrets
+        id: check
+        run: |
+          if [ -n "$TOKEN" -a -n "$KEY" ]; then
+            echo state=ok >> $GITHUB_OUTPUT
+          else
+            echo state=bad >> $GITHUB_OUTPUT
+            echo ":warning title=FSFE secrets not configured::Need both FSFE_SYSTEM_TOKEN and WEBLATE_KEY to run this workflow."
+          fi
+        env:
+          TOKEN: ${{ secrets.FSFE_SYSTEM_TOKEN }}
+          KEY: ${{ secrets.WEBLATE_KEY }}
+    outputs:
+      state: ${{ steps.check.outputs.state }}
   create-pot:
     runs-on: ubuntu-24.04
-    if: false
+    needs: validate-secrets
+    if: needs.validate-secrets.outputs.state == 'ok'
     steps:
       - uses: actions/checkout@v3
         with:

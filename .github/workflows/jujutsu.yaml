@@ -14,6 +14,8 @@ on:
     paths:
       - "src/reuse/**.py"
       - "tests/**.py"
+permissions:
+  contents: read
 jobs:
   test-jujutsu:
     runs-on: ubuntu-24.04
@@ -31,7 +33,7 @@ jobs:
         run: |
           cargo install cargo-binstall
           cargo binstall --strategies crate-meta-data jj-cli --no-confirm
-          export PATH=~/.cargo/bin:$PATH
+          echo ~/.cargo/bin >> $GITHUB_PATH
       - name: Run tests with pytest
         run: |
           poetry run pytest --cov=reuse
