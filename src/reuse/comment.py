@@ -20,12 +20,12 @@
 # SPDX-FileCopyrightText: 2024 Anthony Loiseau <anthony.loiseau@allcircuits.com>
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
-import json
 
 """Module for parsing and creating comments. Just enough to deal with comment
 headers, in any case.
 """
 
+import json
 import logging
 import operator
 import re
