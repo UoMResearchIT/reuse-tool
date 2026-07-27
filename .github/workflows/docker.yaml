@@ -53,7 +53,7 @@ jobs:
     # Depends on successful Docker build/test
     needs:
       - docker_test
-    if:
+    if: >
       false &&
       github.event_name != 'pull_request' &&
       startsWith(github.ref, 'refs/tags/v')

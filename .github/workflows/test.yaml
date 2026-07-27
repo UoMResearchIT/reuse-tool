@@ -61,6 +61,8 @@ jobs:
           poetry run pylint src/reuse/ tests/
 
   black:
+    # Disabled: we don't require this sort of automatic code style enforcement
+    if: false
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v2
@@ -94,6 +96,8 @@ jobs:
           poetry run mypy
 
   prettier:
+    # Disabled: we don't require this sort of automatic code style enforcement
+    if: false
     runs-on: ubuntu-24.04
     container: node:latest
     steps:
