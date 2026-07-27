@@ -18,6 +18,8 @@ from typing import Collection, Generator, List, Optional, cast
 from .types import StrPath
 from .vcs import VCSStrategy
 
+# pylint: disable=too-many-arguments, too-many-locals
+
 _LOGGER = logging.getLogger(__name__)
 
 _IGNORE_DIR_PATTERNS = [
