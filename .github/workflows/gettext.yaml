@@ -47,7 +47,9 @@ jobs:
           # token to push to the main branch.
           token: ${{ secrets.FSFE_SYSTEM_TOKEN }}
       - name: Install poetry, gettext, and wlc
-        run: sudo apt-get install -y python3-poetry gettext wlc
+        uses: UoMResearchIT/actions/apt-get-install@v1.2.7
+        with:
+          packages: python3-poetry gettext wlc
       # We mostly install reuse to install the click dependency.
       - name: Install reuse
         run: poetry install --no-interaction --only main
