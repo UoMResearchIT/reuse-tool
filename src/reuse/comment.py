@@ -181,7 +181,7 @@ class CommentStyle:
             possible_line = line.lstrip()
             prefix = cls.MULTI_LINE.middle
             if possible_line.startswith(prefix):
-                line = possible_line.lstrip(prefix)
+                line = possible_line.removeprefix(prefix)
                 # Note to future self: line.removeprefix would be preferable
                 # here.
                 if line.startswith(cls.INDENT_AFTER_MIDDLE):
@@ -217,7 +217,7 @@ class CommentStyle:
             raise CommentParseError(
                 f"'{first}' does not start with a comment marker"
             )
-        first = first.lstrip(cls.MULTI_LINE.start)
+        first = first.removeprefix(cls.MULTI_LINE.start)
         first = first.lstrip()
 
         for line in lines:
@@ -231,7 +231,7 @@ class CommentStyle:
             raise CommentParseError(
                 f"'{last}' does not end with a comment delimiter"
             )
-        last = last.rstrip(cls.MULTI_LINE.end)
+        last = last.removesuffix(cls.MULTI_LINE.end)
         last = last.rstrip()
         last = cls._remove_middle_marker(last)
 
