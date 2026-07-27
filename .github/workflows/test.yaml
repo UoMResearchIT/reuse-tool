@@ -31,9 +31,9 @@ jobs:
             os: windows-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v7
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v7
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
@@ -47,9 +47,9 @@ jobs:
   pylint:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v7
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v7
         with:
           python-version: 3.11
       - name: Install dependencies
@@ -65,9 +65,9 @@ jobs:
     if: false
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v7
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v7
         with:
           python-version: 3.11
       - name: Install dependencies
@@ -82,9 +82,9 @@ jobs:
   mypy:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v7
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v7
         with:
           python-version: 3.11
       - name: Install dependencies
@@ -101,7 +101,7 @@ jobs:
     runs-on: ubuntu-24.04
     container: node:latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v7
       - name: Install prettier
         run: npm install prettier@3.0.3
       - name: Run prettier
@@ -112,7 +112,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v7
         with:
           python-version: 3.11
       - name: Install dependencies
@@ -125,9 +125,9 @@ jobs:
   docs:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v7
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v7
         with:
           python-version: 3.11
       - name: Install dependencies

@@ -31,9 +31,9 @@ jobs:
             "https://github.com/curl/curl",
           ]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v7
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v7
         with:
           python-version: 3.11
       - name: Install dependencies
@@ -55,9 +55,9 @@ jobs:
       matrix:
         repo: ["https://github.com/spdx/license-list-XML"]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v7
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v7
         with:
           python-version: 3.11
       - name: Install dependencies
