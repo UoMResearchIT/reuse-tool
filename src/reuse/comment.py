@@ -373,7 +373,7 @@ class DjangoCommentStyle(CommentStyle):
 
     MULTI_LINE = MultiLineSegments("{% comment %}", "", "{% endcomment %}")
     SHEBANGS = [
-        "{% extends", # extends must be first tag in Django templates
+        "{% extends",  # extends must be first tag in Django templates
     ]
 
 
