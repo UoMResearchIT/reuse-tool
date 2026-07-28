@@ -31,19 +31,21 @@ jobs:
             "https://github.com/curl/curl",
           ]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v7
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v7
         with:
-          python-version: 3.9
+          python-version: 3.11
       - name: Install dependencies
         run: |
           pip install poetry~=1.3.0
           poetry install --no-interaction
       # Clone and lint repositories
       - name: Clone and lint repositories
-        run:
-          poetry run python .github/workflows/third_party_lint.py --json ${{ matrix.repo }}
+        run: |
+          poetry run python .github/workflows/third_party_lint.py --json $REPO
+        env:
+          REPO: ${{ matrix.repo }}
 
   third-party-lint-expect-failure:
     runs-on: ubuntu-24.04
@@ -53,16 +55,18 @@ jobs:
       matrix:
         repo: ["https://github.com/spdx/license-list-XML"]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v7
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v7
         with:
-          python-version: 3.9
+          python-version: 3.11
       - name: Install dependencies
         run: |
           pip install poetry~=1.3.0
           poetry install --no-interaction
       # Clone and lint repositories
       - name: Clone and lint repositories
-        run:
-          poetry run python .github/workflows/third_party_lint.py --json --expect-failure ${{ matrix.repo }}
+        run: |
+          poetry run python .github/workflows/third_party_lint.py --json --expect-failure $REPO
+        env:
+          REPO: ${{ matrix.repo }}
