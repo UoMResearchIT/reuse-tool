@@ -12,7 +12,7 @@ on:
     # - 1.2.3
     # - 1.2
     # - 1 (not with 0 though)
-    # - latest"
+    # - latest
     tags:
       - "v*.*.*"
   # Manually trigger the workflow from the Actions tab in GitHub
