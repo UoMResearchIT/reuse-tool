@@ -1,10 +1,8 @@
-# SPDX-FileCopyrightText: 2026 Free Software Foundation Europe e.V. <https://fsfe.org>
-#
-# SPDX-License-Identifier: GPL-3.0-or-later
-#
+# SPDX-FileCopyrightText: 2019 Free Software Foundation Europe e.V. <https://fsfe.org>
+# SPDX-FileCopyrightText: 2022 Carmen Bianca Bakker <carmenbianca@fsfe.org>
 # SPDX-FileCopyrightText: 2026 University of Manchester
 #
-# SPDX-License-Identifier: apache-2.0
+# SPDX-License-Identifier: GPL-3.0-or-later
 
 name: Create and publish Debian Docker image to GitHub Container Registry
 
