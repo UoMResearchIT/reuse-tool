@@ -100,7 +100,8 @@ def test_parse_comment_sameline_multi(MultiStyle):
     text = cleandoc(original)
     expected = "Hello"
 
-    assert original != "" and MultiStyle.parse_comment(text) == expected
+    assert original != ""
+    assert MultiStyle.parse_comment(text) == expected
 
 
 def test_base_class_throws_errors():
