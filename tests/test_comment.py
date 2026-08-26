@@ -93,13 +93,14 @@ def test_parse_comment_sameline_multi(MultiStyle):
     """If a multi-line comment style is on a single line, it should still be
     parsed.
     """
-    text = cleandoc(
+    original = \
         f"""
         {MultiStyle.MULTI_LINE.start} Hello {MultiStyle.MULTI_LINE.end}
         """
-    )
+    text = cleandoc(original)
     expected = "Hello"
 
+    assert original != ""
     assert MultiStyle.parse_comment(text) == expected
 
 

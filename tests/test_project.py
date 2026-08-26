@@ -76,6 +76,7 @@ class TestProjectAllFiles:
             include_submodules=project.include_submodules,
             include_meson_subprojects=project.include_meson_subprojects,
             vcs_strategy=project.vcs_strategy,
+            ignore_file=None,
         )
 
     def test_with_mock_implicit_dir(self, monkeypatch, empty_directory):
@@ -95,6 +96,7 @@ class TestProjectAllFiles:
             include_submodules=project.include_submodules,
             include_meson_subprojects=project.include_meson_subprojects,
             vcs_strategy=project.vcs_strategy,
+            ignore_file=None,
         )
 
     def test_with_mock_includes(self, monkeypatch, empty_directory):
@@ -116,6 +118,7 @@ class TestProjectAllFiles:
             include_submodules=project.include_submodules,
             include_meson_subprojects=project.include_meson_subprojects,
             vcs_strategy=project.vcs_strategy,
+            ignore_file=None,
         )
 
 
