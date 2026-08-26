@@ -182,8 +182,6 @@ class CommentStyle:
             prefix = cls.MULTI_LINE.middle
             if possible_line.startswith(prefix):
                 line = possible_line.removeprefix(prefix)
-                # Note to future self: line.removeprefix would be preferable
-                # here.
                 if line.startswith(cls.INDENT_AFTER_MIDDLE):
                     line = line.replace(cls.INDENT_AFTER_MIDDLE, "", 1)
             else:
