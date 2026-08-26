@@ -6,7 +6,6 @@
 # SPDX-FileCopyrightText: 2024 Emil Velikov <emil.l.velikov@gmail.com>
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
-from reuse.comment import read_extra_formats
 
 """Entry function for reuse."""
 
@@ -19,6 +18,8 @@ from typing import Optional
 
 import click
 from click.formatting import wrap_text
+
+from reuse.comment import read_extra_formats
 
 from .. import __REUSE_version__
 from .._util import setup_logging
